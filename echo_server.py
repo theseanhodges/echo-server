@@ -1,5 +1,6 @@
 import socket
 import sys
+import traceback
 
 
 def server(log_buffer=sys.stderr):
@@ -61,7 +62,9 @@ def server(log_buffer=sys.stderr):
                     # message is a trick we learned in the lesson: if you don't
                     # remember then ask your classmates or instructor for a clue.
                     # :)
-
+            except Exception as e:
+                traceback.print_exc()
+                sys.exit(1)
             finally:
                 # TODO: When the inner loop exits, this 'finally' clause will
                 #       be hit. Use that opportunity to close the socket you
