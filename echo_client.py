@@ -1,5 +1,6 @@
 import socket
 import sys
+import traceback
 
 
 def client(msg, log_buffer=sys.stderr):
@@ -29,6 +30,9 @@ def client(msg, log_buffer=sys.stderr):
         #       do it. This will help in debugging problems
         chunk = ''
         print('received "{0}"'.format(chunk.decode('utf8')), file=log_buffer)
+    except Exception as e:
+        traceback.print_exc()
+        sys.exit(1)
     finally:
         # TODO: after you break out of the loop receiving echoed chunks from
         #       the server you will want to close your client socket.
