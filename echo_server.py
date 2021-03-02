@@ -4,19 +4,10 @@ import traceback
 
 
 def server(log_buffer=sys.stderr):
-    # set an address for our server
     address = ('127.0.0.1', 10000)
-    # TODO: Replace the following line with your code which will instantiate
-    #       a TCP socket with IPv4 Addressing, call the socket you make 'sock'
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # TODO: You may find that if you repeatedly run the server script it fails,
-    #       claiming that the port is already used.  You can set an option on
-    #       your socket that will fix this problem. We DID NOT talk about this
-    #       in class. Find the correct option by reading the very end of the
-    #       socket library documentation:
-    #       http://docs.python.org/3/library/socket.html#example
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    # log that we are building a server
     print("making a server on {0}:{1}".format(*address), file=log_buffer)
 
     sock.bind(address)
