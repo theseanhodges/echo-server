@@ -30,8 +30,7 @@ def client(msg, log_buffer=sys.stderr):
         traceback.print_exc()
         sys.exit(1)
     finally:
-        # TODO: after you break out of the loop receiving echoed chunks from
-        #       the server you will want to close your client socket.
+        sock.close()
         print('closing socket', file=log_buffer)
 
         return received_message
