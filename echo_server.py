@@ -23,8 +23,6 @@ def server(log_buffer=sys.stderr):
     sock.listen(1)
 
     try:
-        # the outer loop controls the creation of new connection sockets. The
-        # server will handle each incoming connection one at a time.
         while True:
             print('waiting for a connection', file=log_buffer)
 
@@ -32,9 +30,6 @@ def server(log_buffer=sys.stderr):
             try:
                 print('connection - {0}:{1}'.format(*addr), file=log_buffer)
 
-                # the inner loop will receive messages sent by the client in
-                # buffers.  When a complete message has been received, the
-                # loop will exit
                 while True:
                     data = conn.recv(16)
                     if not data:
