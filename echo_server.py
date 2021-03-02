@@ -27,6 +27,7 @@ def server(log_buffer=sys.stderr):
             print('waiting for a connection', file=log_buffer)
 
             conn, addr = sock.accept()
+            conn.settimeout(5)
             try:
                 print('connection - {0}:{1}'.format(*addr), file=log_buffer)
 
@@ -38,7 +39,9 @@ def server(log_buffer=sys.stderr):
                     
                     conn.sendall(data)
                     print('sent "{0}"'.format(data.decode('utf8')))
-            except Exception as e:
+            except socket.timeout:
+                print('receive timed out', file=log_buffer)
+            except Exception:
                 traceback.print_exc()
                 sys.exit(1)
             finally:
