@@ -20,9 +20,11 @@ def server(log_buffer=sys.stderr):
             conn, addr = sock.accept()
             conn.settimeout(5)
             try:
+                # New connection received
                 print('connection - {0}:{1}'.format(*addr), file=log_buffer)
 
                 while True:
+                    # Read the data and write it back to the socket
                     data = conn.recv(16)
                     if not data:
                         break
@@ -31,6 +33,8 @@ def server(log_buffer=sys.stderr):
                     conn.sendall(data)
                     print('sent "{0}"'.format(data.decode('utf8')))
             except socket.timeout:
+                # Socket timed out. This serves to break us out of our loop and pass us through
+                # cleanly to closing the socket below in the finally block.
                 print('receive timed out', file=log_buffer)
             except Exception:
                 traceback.print_exc()

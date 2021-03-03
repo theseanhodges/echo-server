@@ -13,8 +13,10 @@ def client(msg, log_buffer=sys.stderr):
 
     try:
         print('sending "{0}"'.format(msg), file=log_buffer)
+        # Send the entire message..
         sock.sendall(msg.encode())
         while True:
+            # .. and read it back in 16 byte chunks
             chunk = sock.recv(16)
             if not chunk:
                 break
@@ -24,10 +26,11 @@ def client(msg, log_buffer=sys.stderr):
         traceback.print_exc()
         sys.exit(1)
     finally:
+        # Close the socket
         sock.close()
         print('closing socket', file=log_buffer)
 
-        return received_message
+    return received_message
 
 
 if __name__ == '__main__':
